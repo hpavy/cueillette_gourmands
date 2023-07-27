@@ -130,7 +130,7 @@ def upload(number):
 def upload_recette(nom_recette):
   # Récupérez le fichier déposé par l'utilisateur
     file = request.files.get("file")
-  # Enregistrez le fichier dans le dossier `/uploads`
+  # Enregistrez le fichier dans le dossier `/uploadss` 
     file.save(f"static/img/uploads/recettes/{nom_recette}.jpeg")  
     return redirect(url_for("recettes", nom_recette=nom_recette))
 
