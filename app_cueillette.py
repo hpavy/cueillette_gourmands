@@ -135,5 +135,5 @@ def upload_recette(nom_recette):
     return redirect(url_for("recettes", nom_recette=nom_recette))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8080')
+    app.run(debug=True, host='0.0.0.0',port=8080)
 
