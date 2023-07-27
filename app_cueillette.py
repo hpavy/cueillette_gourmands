@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 from data_base import read_text, modify_text, add_count, ten_count, day_count, hour_count, total_count, add_recette, list_recette, sans_espace
+from wsgiref.simple_server import make_server
+import os
+
 
 app = Flask(__name__)
 
@@ -132,5 +135,5 @@ def upload_recette(nom_recette):
     return redirect(url_for("recettes", nom_recette=nom_recette))
 
 if __name__ == '__main__':
-    app.run(debug=True)  # sert juste à lancer avec le terminal 
+    app.run(host='0.0.0.0', port='8080')
 
