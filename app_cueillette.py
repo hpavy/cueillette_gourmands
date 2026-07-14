@@ -2,12 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 from data_base import read_text, modify_text, add_count, ten_count, day_count, hour_count, total_count, add_recette, list_recette, sans_espace
 from wsgiref.simple_server import make_server
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 app = Flask(__name__)
 
-app.secret_key = '0624359673f6036ad6b5f75515585460'
+app.secret_key = os.environ['SECRET_KEY']
 
 
 @app.context_processor
@@ -106,7 +108,7 @@ def admin():
     if request.method == "POST":
         donnes = request.form
         nom, mdp = donnes.get('nom'), donnes.get('mdp')
-        if nom == "admin" and mdp == "fraises" :
+        if nom == os.environ['ADMIN_USER'] and mdp == os.environ['ADMIN_PASSWORD'] :
             session['utilisateur'] = "admin"
             session['version'] = 'admin'
             return redirect(url_for('index'))
