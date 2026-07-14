@@ -30,3 +30,18 @@ main a{
     padding-top : 10px;
     font-size : 1.3em;
 }
+
+@media (max-width:768px){
+    .nom_recette{
+        padding-left:15px;
+    }
+    .image_debut{
+        height:18em;
+    }
+}
+
+@media (max-width:480px){
+    .image_debut{
+        height:12em;
+    }
+}
