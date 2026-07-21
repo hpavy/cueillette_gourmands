@@ -1,13 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, abort
 import pandas as pd
 from data_base import read_text, modify_text, add_count, ten_count, day_count, hour_count, total_count, add_recette, list_recette, sans_espace
 from wsgiref.simple_server import make_server
+from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 app = Flask(__name__)
 
-app.secret_key = '0624359673f6036ad6b5f75515585460'
+app.secret_key = os.environ['SECRET_KEY']
 
 
 @app.context_processor
@@ -59,18 +62,17 @@ def horaires():
 @app.route('/recettes', methods=['POST','GET'])
 def liste_recettes():
     version()
-    if request.method == "POST" :
+    if request.method == "POST" and session.get('version') == 'admin' :
         donnes = request.form
         texte_page = donnes.get('recette')
         if texte_page is not None :
-            print('texte_page')
             add_recette(texte_page)
     return render_template('liste-recettes.html', liste_recette = list_recette(), espace=sans_espace)
 
 @app.route('/recettes/<nom_recette>', methods=['POST','GET'])
 def recettes(nom_recette):
     version()
-    if request.method == "POST" :
+    if request.method == "POST" and session.get('version') == 'admin' :
         donnes = request.form
         texte_page = donnes.get('supprimer')
         if texte_page is not None :
@@ -106,7 +108,7 @@ def admin():
     if request.method == "POST":
         donnes = request.form
         nom, mdp = donnes.get('nom'), donnes.get('mdp')
-        if nom == "admin" and mdp == "fraises" :
+        if nom == os.environ['ADMIN_USER'] and mdp == os.environ['ADMIN_PASSWORD'] :
             session['utilisateur'] = "admin"
             session['version'] = 'admin'
             return redirect(url_for('index'))
@@ -120,18 +122,21 @@ def admin():
     
 @app.route("/upload/photo<number>", methods=["POST"])
 def upload(number):
-  # Récupérez le fichier déposé par l'utilisateur
+    if session.get('version') != 'admin' :
+        abort(403)
+    if not number.isdigit() :
+        abort(400)
     file = request.files.get("file")
-  # Enregistrez le fichier dans le dossier `/uploads`
-    file.save(f"static/img/uploads/photos/photo{number}.jpeg")  
+    file.save(f"static/img/uploads/photos/photo{number}.jpeg")
     return redirect(url_for('photos'))
 
 @app.route("/upload/recettes/<nom_recette>", methods=["POST"])
 def upload_recette(nom_recette):
-  # Récupérez le fichier déposé par l'utilisateur
+    if session.get('version') != 'admin' :
+        abort(403)
+    nom_recette_safe = secure_filename(nom_recette)
     file = request.files.get("file")
-  # Enregistrez le fichier dans le dossier `/uploadss` 
-    file.save(f"static/img/uploads/recettes/{nom_recette}.jpeg")  
+    file.save(f"static/img/uploads/recettes/{nom_recette_safe}.jpeg")
     return redirect(url_for("recettes", nom_recette=nom_recette))
 
 if __name__ == '__main__':

@@ -10,3 +10,11 @@
 main a img{
     height:1.5em;
 }
+
+@media (max-width:768px){
+    .image_debut{ height:18em; }
+}
+
+@media (max-width:480px){
+    .image_debut{ height:12em; }
+}

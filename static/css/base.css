@@ -55,6 +55,12 @@ footer{
     margin-top:80px;
 }
 
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
 .logo_bio{
     padding-right:50px
 }
@@ -174,4 +180,97 @@ footer a:hover{
 
 .logo_bio:hover{
     opacity: 0.7;
+}
+
+.nav-toggle-checkbox{
+    display:none;
+}
+
+.nav-toggle-label{
+    display:none;
+    cursor:pointer;
+}
+
+@media (max-width:950px){
+    nav{
+        flex-wrap:wrap;
+        height:auto;
+        gap:15px;
+        padding-top:15px;
+        padding-bottom:15px;
+    }
+    nav img{
+        height:50px;
+    }
+    .logo_cueillette{
+        padding-left:20px;
+    }
+    .logo_bio{
+        padding-right:0;
+    }
+    .nav-right{
+        order:2;
+        gap:15px;
+        padding-right:20px;
+    }
+    .nav-toggle-label{
+        display:block;
+        font-size:1.5em;
+        line-height:1;
+    }
+    .cliquable{
+        display:none;
+        flex-direction:column;
+        width:100%;
+        gap:0;
+        order:3;
+    }
+    .nav-toggle-checkbox:checked ~ .cliquable{
+        display:flex;
+    }
+    header nav + p{
+        padding-top:100px;
+    }
+    .admin-barre{
+        padding-top:110px;
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+    .nb-utilisateurs{
+        padding-left:20px;
+    }
+    .admin-barre form{
+        padding-right:20px;
+    }
+}
+
+@media (max-width:768px){
+    .trouver{
+        padding-left:20px;
+    }
+    .contacter{
+        padding-right:20px;
+    }
+    .credits{
+        padding-right:20px;
+    }
+    .admin{
+        padding-left:20px;
+    }
+    footer h1{
+        font-size:1.7em;
+    }
+}
+
+@media (max-width:480px){
+    header nav + p{
+        padding-top:90px;
+    }
+    .admin-barre{
+        padding-top:100px;
+    }
+    footer h1{
+        font-size:1.4em;
+    }
 }

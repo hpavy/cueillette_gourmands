@@ -11,3 +11,11 @@
     height : 50px;
     min-height:50px;
 }
+
+@media (max-width:768px){
+    .image_debut{ height:18em; }
+}
+
+@media (max-width:480px){
+    .image_debut{ height:12em; }
+}

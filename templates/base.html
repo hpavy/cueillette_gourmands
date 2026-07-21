@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +21,8 @@
             <img src="{{ url_for('static', filename='img/logo/logo_cueillette.png')}}" alt="logo cueillette des gourmands" title="logo cueilllette" >
             </a>
 
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+
             <div class="cliquable">
                 <a href="{{ url_for('a_cueillir')}}">À cueillir</a>
                 <a href="{{ url_for('horaires')}}">Horaires</a>
@@ -29,8 +32,11 @@
                 <a href="{{ url_for('a_propos')}}">À propos</a>
             </div>
 
-            <a class="logo_bio" href="https://www.agencebio.org" target="_blank"><img src="{{ url_for('static', filename='img/logo/logo-bio_0.png')}}" alt="logo bio" title="logo bio"></a>
-          
+            <div class="nav-right">
+                <a class="logo_bio" href="https://www.agencebio.org" target="_blank"><img src="{{ url_for('static', filename='img/logo/logo-bio_0.png')}}" alt="logo bio" title="logo bio"></a>
+                <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu">☰</label>
+            </div>
+
         </nav>
         {%if session['utilisateur']=="admin" %} 
         <div class="admin-barre">
